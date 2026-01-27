@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secret Whisper Quiz</title>
+
+<style>
+  body {
+    background: linear-gradient(#fff7ec, #fff);
+    font-family: "Segoe UI", Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    color: #4b2e1e;
+  }
+
+  .quiz-box {
+    max-width: 560px;
+    margin: auto;
+    background: white;
+    border-radius: 22px;
+    padding: 25px 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: #7a5a3a;
+    margin-bottom: 20px;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  button.option {
+    font-size: 18px;
+    padding: 15px;
+    border-radius: 18px;
+    border: none;
+    background: #ffefd5;
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s;
+  }
+
+  button.option:hover {
+    transform: scale(1.05);
+    background: #ffe3b3;
+  }
+
+  .spin {
+    animation: spin 0.6s;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .wrong {
+    animation: shake 0.5s;
+    background: #fff2b3; /* soft yellow */
+  }
+
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+  }
+
+  #feedback {
+    margin-top: 18px;
+    font-size: 17px;
+    color: #2f7a2f;
+    min-height: 24px;
+  }
+
+  .next-btn {
+    margin-top: 22px;
+    padding: 12px 26px;
+    font-size: 16px;
+    border-radius: 14px;
+    border: none;
+    background: #5c8d89;
+    color: white;
+    cursor: pointer;
+    display: none;
+  }
+  
+  .start-btn {
+  margin-top: 20px;
+  padding: 12px 26px;
+  font-size: 16px;
+  border-radius: 14px;
+  border: none;
+  background: #5c8d89;
+  color: white;
+  cursor: pointer;
+  display: inline-block; /* visible */
+}
+
+</style>
+</head>
+
+<body>
+<div id="welcomeScreen" class="quiz-box">
+  <h2>🌟 Welcome to the Secret Whisper Quiz! 🌟</h2>
+  <p>Hi there! Let's have some fun and learn with Riya's story.</p>
+  <button id="startBtn" class="start-btn" onclick="startQuiz()">Start Quiz 💛</button>
+</div>
+
+<div id="quizContent" class="quiz-box" style="display:none;">
+  <h2 id="question"></h2>
+  <div class="subtitle" id="subtitle"></div>
+  <div class="options" id="options"></div>
+  <div id="feedback"></div>
+  <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next 🌸</button>
+</div>
+<script>
+function startQuiz() {
+  document.getElementById("welcomeScreen").style.display = "none";
+  document.getElementById("quizContent").style.display = "block";
+  loadQuestion();
+}
+
+const quiz = [
+  {
+    q: "How do you usually feel when it is exam day or something very important?",
+    sub: "Tap the face that feels most like you 💛",
+    options: ["😀 Happy & Confident", "😟 A Little Worried", "😰 Very Nervous"],
+    correct: null, // all options accepted
+    feedback: (answer) => "All feelings are okay 💛 Just like Riya felt a little nervous too sometimes."
+  },
+  {
+    q: "What kind of girl was Riya?",
+    sub: "Think about the story",
+    options: ["😊 Cheerful & hardworking", "😴 Lazy", "😡 Angry"],
+    correct: "😊 Cheerful & hardworking",
+    feedback: (answer) => answer === "😊 Cheerful & hardworking"
+      ? "Yes! Riya loved learning and tried her best 🌟"
+      : "Riya was cheerful and hardworking 💛"
+  },
+  {
+    q: "What did Riya do to prepare for exams?",
+    sub: "Tap what feels right",
+    options: ["🗓️ Made a timetable", "📚 Revised daily", "📺 Watched TV all day"],
+    correct: ["🗓️ Made a timetable", "📚 Revised daily"],
+    feedback: (answer) => {
+      if(answer === "📺 Watched TV all day") {
+        return "Hmm… Riya studied and revised. Watching TV all day doesn't help 💛";
+      } else {
+        return "Yes! Just like Riya, this helps you do your best 🌟";
+      }
+    }
+  },
+  {
+    q: "Even after studying well, how did Riya feel sometimes?",
+    sub: "This can happen to many of us",
+    options: ["😟 Worried", "😌 Very calm", "😄 Confident"],
+    correct: "😟 Worried",
+    feedback: (answer) => answer === "😟 Worried"
+      ? "Exactly! Even after preparing, Riya felt a little worried 💛"
+      : "Riya was worried — sometimes we feel worried even after doing our best 🌸"
+  },
+  {
+    q: "What did Riya’s parents do when they saw her worried?",
+    sub: "Parents’ love 💛",
+    options: ["🤗 Hugged and supported her", "😠 Scolded her", "🙈 Ignored her"],
+    correct: "🤗 Hugged and supported her",
+    feedback: (answer) => answer === "🤗 Hugged and supported her"
+      ? "Yes! Their love made her feel calm and confident 🌟"
+      : "Not quite. Her parents hugged and supported her 💛"
+  },
+  {
+    q: "How do you feel when your parents support you?",
+    sub: "Choose the feeling",
+    options: ["😊 Calm", "💛 Confident", "🤗 Happy"],
+    correct: null, // all accepted
+    feedback: (answer) => "Yes! Feeling calm, confident, or happy is natural 💛"
+  },
+  {
+    q: "Where did Krishna appear to Riya?",
+    sub: "A magical moment ✨",
+    options: ["🚌 In the school bus", "🏠 At home", "🏫 In class"],
+    correct: "🚌 In the school bus",
+    feedback: (answer) => answer === "🚌 In the school bus"
+      ? "Yes! Krishna appeared in the bus to guide her 🌟"
+      : "Krishna appeared in the school bus 💛"
+  },
+  {
+    q: "What happens when we worry too much?",
+    sub: "Tap what you think happens",
+    options: ["💭 Mind feels heavy", "📚 Focus reduces", "😌 Calmness goes away"],
+    correct: null, // any answer accepted
+    feedback: (answer) => "Yes! Worry can make our mind heavy and reduce focus 💛"
+  },
+  {
+    q: "What did Krishna tell Riya to focus on?",
+    sub: "Very important wisdom 🌸",
+    options: ["📝 Doing her best work", "🏆 Only marks", "👀 Others’ results"],
+    correct: "📝 Doing her best work",
+    feedback: (answer) => answer === "📝 Doing her best work"
+      ? "Exactly! Focus on your effort, not the result 🌟"
+      : "Krishna told Riya to focus on doing her best work 💛"
+  },
+  {
+    q: "What can you do when you feel nervous?",
+    sub: "You can use this anytime 💛",
+    options: ["🌬️ Take a calm breath & try your best", "😢 Give up", "😰 Keep worrying"],
+    correct: "🌬️ Take a calm breath & try your best",
+    feedback: (answer) => answer === "🌬️ Take a calm breath & try your best"
+      ? "Yes! Calm breaths help like Riya did 🌟"
+      : "Try taking a calm breath and doing your best, just like Riya 💛"
+  }
+];
+
+let current = 0;
+
+function loadQuestion() {
+  document.getElementById("question").innerText = quiz[current].q;
+  document.getElementById("subtitle").innerText = quiz[current].sub;
+
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  quiz[current].options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.className = "option";
+    btn.innerText = opt;
+    btn.onclick = () => selectOption(btn);
+    optionsDiv.appendChild(btn);
+  });
+
+  document.getElementById("feedback").innerText = "";
+  document.getElementById("nextBtn").style.display = "none";
+}
+
+function selectOption(button) {
+  document.querySelectorAll(".option").forEach(b => b.classList.remove("spin", "wrong"));
+
+  const answer = button.innerText;
+  const question = quiz[current];
+  const feedbackMsg = question.feedback(answer);
+
+  document.getElementById("feedback").innerText = feedbackMsg;
+
+  let isWrong = false;
+
+  if (question.correct) {
+    if (Array.isArray(question.correct)) {
+      if (!question.correct.includes(answer)) isWrong = true;
+    } else if (answer !== question.correct) {
+      isWrong = true;
+    }
+  }
+
+  if (isWrong) {
+    // Wrong answers shake
+    button.classList.add("wrong");
+    setTimeout(() => button.classList.remove("wrong"), 600);
+    // Next button stays hidden
+    document.getElementById("nextBtn").style.display = "none";
+  } else {
+    // Correct answers spin
+    button.classList.add("spin");
+    // Enable Next button
+    document.getElementById("nextBtn").style.display = "inline-block";
+  }
+}
+
+
+
+function nextQuestion() {
+  current++;
+  if (current < quiz.length) {
+    loadQuestion();
+  } else {
+    document.querySelector(".quiz-box").innerHTML = `
+      <h2>🌟 Well Done!</h2>
+      <p>You listened to the story beautifully.</p>
+      <p>Just like Riya, remember:</p>
+      <p><strong>Do your best, and leave the rest to God 💛</strong></p>
+    `;
+  }
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>
