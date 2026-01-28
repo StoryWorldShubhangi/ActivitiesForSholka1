@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Best Effort Garden</title>
+
+<style>
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(#fff7ec, #ffffff);
+  padding: 20px;
+  text-align: center;
+  color: #4b2e1e;
+}
+
+.container {
+  max-width: 650px;
+  margin: auto;
+  background: white;
+  border-radius: 24px;
+  padding: 25px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+.garden {
+  display: flex;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.basket {
+  width: 50%;
+  background: #fff2dc;
+  border-radius: 18px;
+  padding: 15px;
+  min-height: 200px;
+}
+
+.basket h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.collected {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card {
+  background: #ffefd5;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.card.selected {
+  outline: 2px dashed #c28f5c;
+}
+
+#plant {
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+
+#message {
+  margin-top: 18px;
+  min-height: 28px;
+  font-size: 16px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>🌱 My Best Effort Garden</h2>
+  <p>Tap a card, then tap the basket where it belongs 💛</p>
+
+  <div class="garden">
+    <div class="basket" onclick="drop('control')">
+      <h3>🧺 Things I Can Control</h3>
+      <div id="plant">🌱</div>
+      <div id="controlBasket" class="collected"></div>
+    </div>
+
+    <div class="basket" onclick="drop('nocontrol')">
+      <h3>🧺 Things I Cannot Control</h3>
+      <div id="noControlBasket" class="collected"></div>
+    </div>
+  </div>
+
+  <div class="cards">
+  <div class="card" onclick="pick(this)">📚 Trying my best in studies</div>
+  <div class="card" onclick="pick(this)">🏆 Winning every competition</div>
+<div class="card" onclick="pick(this)">🏠 Helping at home</div>
+<div class="card" onclick="pick(this)">🗣️ Someone blamed me for something I didn’t do</div>
+<div class="card" onclick="pick(this)">🌬️ Taking a calm breath when upset</div>
+<div class="card" onclick="pick(this)">🧒 Friends behaving nicely all the time</div>
+<div class="card" onclick="pick(this)">🎨 Practicing a hobby (drawing / music / sport)</div>
+<div class="card" onclick="pick(this)">😔 Others got invited, I didn’t</div>
+<div class="card" onclick="pick(this)">🧑‍🤝‍🧑 My friend didn’t choose me</div>
+
+  </div>
+
+  <div id="message"></div>
+</div>
+
+<script>
+let selectedCard = null;
+let growth = 0;
+
+const controlItems = [
+  "📚 Trying my best in studies",
+  "🏠 Helping at home",
+  "🌬️ Taking a calm breath when upset",
+  "🎨 Practicing a hobby (drawing / music / sport)"
+];
+
+
+const plantStages = ["🌱", "🌿", "🌼", "🌸"];
+
+function pick(card) {
+  document.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
+  selectedCard = card;
+  card.classList.add("selected");
+  document.getElementById("message").innerText =
+    "Now tap the basket where this belongs 🌼";
+}
+
+function drop(type) {
+  if (!selectedCard) return;
+
+  const text = selectedCard.innerText;
+  const message = document.getElementById("message");
+  const isControl = controlItems.includes(text);
+
+  if (
+    (type === "control" && isControl) ||
+    (type === "nocontrol" && !isControl)
+  ) {
+    // MOVE card into basket
+    const target =
+      type === "control"
+        ? document.getElementById("controlBasket")
+        : document.getElementById("noControlBasket");
+
+    selectedCard.classList.remove("selected");
+    selectedCard.onclick = null; // prevent re-click
+    target.appendChild(selectedCard);
+    selectedCard = null;
+
+    // Grow plant only for control items
+    if (isControl && growth < plantStages.length - 1) {
+      growth++;
+      document.getElementById("plant").innerText = plantStages[growth];
+    }
+
+    message.innerText =
+      isControl
+        ? "🌼 Lovely! Your effort helps you grow"
+        : "💛 That’s okay. Some things are not in our hands";
+  } else {
+    message.innerText = "🌸 Try again gently";
+  }
+}
+</script>
+
+</body>
+</html>
