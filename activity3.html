@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Day 3 – Creative Activities</title>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(180deg, #fff6ec, #f6fbfa);
+    color: #4b2e1e;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: auto;
+    padding: 24px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .header h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+  }
+
+  .header p {
+    font-size: 17px;
+    color: #6b4a32;
+	text-align: center;   /* 👈 add this */
+  }
+
+  /* Activity Card */
+  .activity {
+    background: #ffffff;
+    border-radius: 26px;
+    padding: 28px 24px;
+    margin-bottom: 36px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+	text-align: center;   /* 👈 add this */
+  }
+
+  .activity::after {
+    content: "";
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 120px;
+    height: 120px;
+    background: #fff2dc;
+    border-radius: 50%;
+    z-index: 0;
+  }
+
+  .activity h2 {
+    font-size: 24px;
+    margin-bottom: 6px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .goal {
+    font-size: 15px;
+    color: #7a5a3a;
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Steps */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .step {
+    background: #ffefd5;
+    border-radius: 18px;
+    padding: 16px;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .step.soft {
+    background: #eef7f6;
+  }
+
+  /* Big Prompt */
+  .prompt {
+    background: linear-gradient(135deg, #fff0da, #f4fbfa);
+    border-radius: 22px;
+    padding: 22px;
+    font-size: 18px;
+    margin: 22px 0;
+	text-align: center;   /* 👈 add this */
+  }
+
+  /* Illustration Row */
+  .illustration {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 32px;
+    margin: 10px 0 20px;
+  }
+
+  /* Footer Message */
+  .note {
+    font-size: 15px;
+    color: #5a7d7c;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .footer {
+    text-align: center;
+    font-size: 15px;
+    color: #6b4a32;
+    margin: 40px 0 10px;
+  }
+
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>🌼 Day 3 – Create with Your Heart 🌼</h1>
+    <p>Calm mind • Best effort • Happy learning</p>
+  </div>
+
+  <!-- ACTIVITY 1 -->
+  <div class="activity">
+    <h2>🧘‍♀️ Design Your Calm Button</h2>
+    <div class="goal">Goal: Feeling calm when worries come</div>
+
+    <div class="illustration">
+      ☁️ 💛
+    </div>
+
+    <div class="prompt">
+      “Imagine you have a magic button.<br>
+      When you press it, your mind becomes calm.<br>
+      <strong>Design that button.</strong>”
+    </div>
+
+    <div class="steps">
+      <div class="step">1. 🎨 Draw your magic button</div>
+      <div class="step">2. ✂️ Colour and cut it out</div>
+      <div class="step soft">3. ☁️ Add cotton or paper to make it 3D</div>
+      <div class="step soft">4. 🏠 Stick it on your wall</div>
+      <div class="step">5. 🌬️ Press it and take a deep breath</div>
+    </div>
+
+    <div class="note">
+      This button is only for you 💛
+    </div>
+  </div>
+
+  <!-- ACTIVITY 2 -->
+  <div class="activity">
+    <h2>🏅 My Best Effort Badge</h2>
+    <div class="goal">Goal: Trying your best — even when it is hard</div>
+
+    <div class="illustration">
+      ⭐ 🏅 🌟
+    </div>
+
+    <div class="prompt">
+      “Design a badge for yourself<br>
+      for trying your best —<br>
+      <strong>even when it was difficult.</strong>”
+    </div>
+
+    <div class="steps">
+      <div class="step">1. 🎖️ Draw a badge or medal</div>
+      <div class="step">2. 🎨 Colour it beautifully</div>
+      <div class="step soft">3. 📸 Stick your photo or draw yourself</div>
+      <div class="step soft">4. 📜 Add a small certificate if you like</div>
+      <div class="step">5. 🧠 Keep it near your study place</div>
+    </div>
+
+    <div class="note">
+      This badge is for effort — not marks 💛
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    🌸 Just like Riya learned — do your best and stay calm 🌸
+  </div>
+
+</div>
+
+</body>
+</html>
